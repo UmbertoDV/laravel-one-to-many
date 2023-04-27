@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
@@ -30,7 +31,8 @@ Route::middleware('auth')
         Route::delete('/cards/{card}/force-delete',[CardController::class, 'forceDelete'])->name('cards.force-delete');
         
         Route::resource('cards', CardController::class);
-            // ->parameters(['cards' => 'card:slug']);
+        
+        Route::resource('categories', CategoryController::class)->except(['show']);
     });
 
 

@@ -20,11 +20,11 @@
         @auth
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('home') }}">{{ __('Home') }}</a>
+                    <a class="nav-link @if(request()->routeIs('admin.cards*')) active @endif" href="{{route('admin.cards.index') }}">{{ __('Cards') }}</a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link" href="{{route('admin.cards.index') }}">{{ __('Cards') }}</a>
-                </li> --}}
+                <li class="nav-item">
+                    <a class="nav-link @if(request()->routeIs('admin.categories*')) active @endif" href="{{route('admin.categories.index') }}">{{ __('Categorie') }}</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('profile.edit') }}">{{__('Profile')}}</a></a>
                 </li>

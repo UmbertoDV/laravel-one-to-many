@@ -46,3 +46,10 @@ main {
     width: calc(100% - 300px);
     overflow-y: auto;
 }
+
+.color-preview {
+    display: inline-block;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+}
