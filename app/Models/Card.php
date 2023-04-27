@@ -12,7 +12,11 @@ class Card extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['title','image', 'text', 'is_published'];
+    protected $fillable = ['category_id','title','image', 'text', 'is_published'];
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
 
     public function getAbstract($max = 50){
         return substr($this->text, 0, $max) . "...";

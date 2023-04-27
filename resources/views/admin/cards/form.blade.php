@@ -38,6 +38,22 @@
       </div>
 
       <div class="col-4 mb-3">
+        <label for="category_id" class="form-label">Categoria</label>
+        <select name="category_id" id="category_id" class="form-select @error('category_id') is-invalid @enderror">
+          <option value="">Nessuna categoria</option>
+          @foreach ($categories as $category)
+            <option @if (old('category_id', $card->category->id) == $category->id) selected @endif value="{{ $category->id }}">{{ $category->label }}</option n>
+          @endforeach
+          <option value="10">Categoria non valida</option>
+        </select>
+          @error('category_id')
+          <div class="invalid-feedback">
+            {{ $message }}
+          </div>
+          @enderror
+      </div>
+
+      <div class="col-4 mb-3">
         <label for="is_published" class="form-label">Pubblicato</label>
         <input type="checkbox" name="is_published" id="is_published" class="form-check-control @error('is_published') is-invalid @enderror" @checked(old('is_published', $card->is_published)) value="1">
         @error('is_published')

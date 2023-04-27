@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 
+use Validator;
+
 use App\Models\Card;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
@@ -36,7 +39,8 @@ class CardController extends Controller
     public function create()
     {
         $card = new Card;
-        return view('admin.cards.form', compact('card'));
+        $categories = Category::orderBy('label')->get();
+        return view('admin.cards.form', compact('card', 'categories'));
     }
 
     /**
@@ -51,6 +55,8 @@ class CardController extends Controller
             'title' => 'required|string|max:100',
             'text' => 'required|string',
             'image' => 'nullable|image|mimes:jpg,png,jpeg',
+            'is_published' => 'boolean',
+            'category_id' => 'nullable|exist:categories,id',
         ],
         [
             'title.required' => 'Il titolo è obbligatorio',
@@ -60,25 +66,23 @@ class CardController extends Controller
             'text.string' => 'Il testo deve essere una string',
             'image.image' => 'Il file caricato deve essere un\'image',
             'image.mimes' => 'Disponibili solo jpg, png e jpeg',
+            'category_id.exist' => 'L\'id della categoria non è valido',
             ]
         );
         
         // dd($request->all());
         $data = $request->all();
         
-    if(Arr::exists($data, 'image')){
-        $path_image = Storage::put('uploads/cards', $data['image']);
-        $data['image'] = $path_image;
-    };
-
-        // dd($data);
-
+        if(Arr::exists($data, 'image')){
+            $path_image = Storage::put('uploads/cards', $data['image']);
+            $data['image'] = $path_image;
+        };
+        
         $card = new Card;
         $card->fill($data);
         $card->slug = Card::generateSlug($card->title);
-
         $card->save();
-
+        
         return to_route('admin.cards.show', $card)->with('message_content', "Card $card->id creata con successo");
     }
 
@@ -101,7 +105,8 @@ class CardController extends Controller
      */
     public function edit(Card $card)
     {
-        return view('admin.cards.form', compact('card'));
+        $categories = Category::orderBy('label')->get();
+        return view('admin.cards.form', compact('card', 'categories'));
     }
 
     /**
@@ -118,6 +123,7 @@ class CardController extends Controller
             'text' => 'required|string',
             'image' => 'nullable|image|mimes:jpg,png,jpeg',
             'is_published' => 'boolean',
+            'category_id' => 'nullable|exist:categories,id',
         ],
         [
             'title.required' => 'Il titolo è obbligatorio',
@@ -127,6 +133,7 @@ class CardController extends Controller
             'text.string' => 'Il testo deve essere una string',
             'image.image' => 'Il file caricato deve essere un\'image',
             'image.mimes' => 'Disponibili solo jpg, png e jpeg',
+            'category_id.exist' => 'L\'id della categoria non è valido',
         ]
     );
 
