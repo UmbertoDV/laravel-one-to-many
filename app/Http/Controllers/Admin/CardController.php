@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 
-use Validator;
-
 use App\Models\Card;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -56,7 +54,7 @@ class CardController extends Controller
             'text' => 'required|string',
             'image' => 'nullable|image|mimes:jpg,png,jpeg',
             'is_published' => 'boolean',
-            'category_id' => 'nullable|exist:categories,id',
+            'category_id' => 'nullable|exists:categories,id',
         ],
         [
             'title.required' => 'Il titolo è obbligatorio',
@@ -66,7 +64,7 @@ class CardController extends Controller
             'text.string' => 'Il testo deve essere una string',
             'image.image' => 'Il file caricato deve essere un\'image',
             'image.mimes' => 'Disponibili solo jpg, png e jpeg',
-            'category_id.exist' => 'L\'id della categoria non è valido',
+            'category_id.exists' => 'L\'id della categoria non è valido',
             ]
         );
         
@@ -123,7 +121,7 @@ class CardController extends Controller
             'text' => 'required|string',
             'image' => 'nullable|image|mimes:jpg,png,jpeg',
             'is_published' => 'boolean',
-            'category_id' => 'nullable|exist:categories,id',
+            'category_id' => 'nullable|exists:categories,id',
         ],
         [
             'title.required' => 'Il titolo è obbligatorio',
@@ -133,7 +131,7 @@ class CardController extends Controller
             'text.string' => 'Il testo deve essere una string',
             'image.image' => 'Il file caricato deve essere un\'image',
             'image.mimes' => 'Disponibili solo jpg, png e jpeg',
-            'category_id.exist' => 'L\'id della categoria non è valido',
+            'category_id.exists' => 'L\'id della categoria non è valido',
         ]
     );
 

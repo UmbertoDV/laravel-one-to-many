@@ -42,9 +42,8 @@
         <select name="category_id" id="category_id" class="form-select @error('category_id') is-invalid @enderror">
           <option value="">Nessuna categoria</option>
           @foreach ($categories as $category)
-            <option @if (old('category_id', $card->category->id) == $category->id) selected @endif value="{{ $category->id }}">{{ $category->label }}</option n>
+            <option @if (old('category_id', $card->category_id) == $category->id) selected @endif value="{{ $category->id }}">{{ $category->label }}</option n>
           @endforeach
-          <option value="10">Categoria non valida</option>
         </select>
           @error('category_id')
           <div class="invalid-feedback">
